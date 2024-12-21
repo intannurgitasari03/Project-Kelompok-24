@@ -23,7 +23,7 @@ class Operation {
 
     private void start() {
         while (true) {
-            System.out.println("\n== KAMUS KATA BY KELOMPOK 9 ==");
+            System.out.println("\n== KAMUS KATA BY KELOMPOK 24 ==");
             System.out.println("1. Cari kata");
             System.out.println("2. Tampilkan semua kata");
             System.out.println("3. Hapus kata");
