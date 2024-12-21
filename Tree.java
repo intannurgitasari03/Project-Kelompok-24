@@ -79,4 +79,46 @@ public class Tree {
         printRecursive(root, new StringBuilder(), stack);
         stack.bubbleSortDescending();
     }
+    public void delete(String word) {
+        deleteRecursive(root, word, 0);
+    }
+
+    private boolean deleteRecursive(Node current, String word, int index) {
+        if (index == word.length()) {
+            if (current.isEndOfWord()) {
+                current.markEndOfWord(); // Unmark the end of the word
+                return current.getFirstChild() == null; // If no children, it can be deleted
+            }
+            return false;
+        }
+
+        Node child = findChild(current, word.charAt(index));
+        if (child == null) {
+            return false;
+        }
+
+        boolean canDeleteChild = deleteRecursive(child, word, index + 1);
+
+        if (canDeleteChild) {
+            removeChild(current, child);
+            return current.getFirstChild() == null && !current.isEndOfWord();
+        }
+
+        return false;
+    }
+
+    private void removeChild(Node current, Node child) {
+        if (current.getFirstChild() == child) {
+            current.setFirstChild(child.getNextSibling());
+        } else {
+            Node sibling = current.getFirstChild();
+            while (sibling != null && sibling.getNextSibling() != child) {
+                sibling = sibling.getNextSibling();
+            }
+            if (sibling != null) {
+                sibling.setNextSibling(child.getNextSibling());
+            }
+        }
+    }
 }
+
