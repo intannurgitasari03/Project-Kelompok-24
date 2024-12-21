@@ -49,7 +49,7 @@ class Operation {
         String prefix = scanner.nextLine().toLowerCase();
         if (tree.search(prefix)) {
             System.out.println("Kata dengan awalan '" + prefix + "' ditemukan.");
-            tree.printWords();
+            tree.printWords(prefix);
         } else {
             System.out.println("Tidak ada kata dengan awalan '" + prefix + "'");
         }
@@ -68,14 +68,14 @@ class Operation {
             case 1 -> {
                 tree.bubbleSortAscending();
                 System.out.println("Kata telah diurutkan secara ascending.");
-                tree.printWords();
+                tree.printWords(""); 
             }
             case 2 -> {
                 tree.bubbleSortDescending();
                 System.out.println("Kata telah diurutkan secara descending.");
-                tree.printWords();
+                tree.printWords(""); 
             }
-            case 3 -> tree.printWords();
+            case 3 -> tree.printWords(""); 
             default -> System.out.println("Pilihan tidak valid!");
         }
     }
@@ -84,7 +84,7 @@ class Operation {
         System.out.print("Masukkan kata yang ingin dihapus: ");
         String word = scanner.nextLine().toLowerCase();
         tree.delete(word);
-        queue.enqueue(word); // Simpan kata yang dihapus ke dalam queue
+        queue.enqueue(word); 
         System.out.println("Kata '" + word + "' berhasil dihapus.");
     }
 
@@ -99,20 +99,12 @@ class Operation {
     }
 
     private void createDefaultData() {
-        insertDefault("Alvionita");
-        insertDefault("Surya");
-        insertDefault("Angie");
-        insertDefault("Novi");
-        insertDefault("Ayub");
-        insertDefault("Nurul");
-        insertDefault("abjad");
-        insertDefault("absorpsi");
-        insertDefault("actual");
-        insertDefault("adab");
-    }
-
-    private void insertDefault(String word) {
-        stack.push(word);
-        tree.insert(word);
+       
+        tree.insert("ana");
+        tree.insert("angga");
+        tree.insert("surya");
+        tree.insert("nurul");
+        tree.insert("novi");
+        tree.insert("nana");
     }
 }
