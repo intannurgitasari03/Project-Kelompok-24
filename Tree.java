@@ -1,3 +1,5 @@
+import java.util.Stack;
+
 public class Tree {
     private Node root;
 
@@ -36,5 +38,45 @@ public class Tree {
             child=child.getNextSibling();
         }
         return null;
+    }
+    private void addChild(Node current, Node child){
+        if(current.getFirstChild()==null){
+            current.setFirstChild(child);
+        }else{
+            Node sibling = current.getFirstChild();
+            while (sibling.getNextSibling()!=null){
+                sibling=sibling.getNextSibling();
+            }
+            sibling.setNextSibling(child);
+        }
+    }
+    public void printWords(){
+        Stack stack = new Stack();
+        printRecursive(root, new StringBuilder(),stack);
+        stack.print();
+    }
+    private void printRecursive(Node current, StringBuilder prefix, Stack stack){
+        if(current.isEndOfWord()){
+            stack.push(prefix.toString());
+        }
+        Node child = current.get.FirstChild();
+        while(child!=null){
+            prefix.append(child.getNodeName());
+            printRecursive(child, prefix, stack);
+            prefix.deleteCharAt(prefix.length()-1);
+            child=child.getNextSibling();
+        }
+    }
+
+    public void bubbleSortAscending() {
+        Stack stack = new Stack();
+        printRecursive(root, new StringBuilder(), stack);
+        stack.bubbleSortAscending();
+    }
+
+    public void bubbleSortDescending(){
+        Stack stack = new Stack();
+        printRecursive(root, new StringBuilder(), stack);
+        stack.bubbleSortDescending();
     }
 }
