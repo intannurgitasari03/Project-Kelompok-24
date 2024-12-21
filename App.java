@@ -3,20 +3,27 @@ import java.util.Scanner;
 public class App {
     public static void main(String[] args) {
         Operation operation = new Operation();
-        operation.start();
     }
 }
 
 class Operation {
-    public Scanner scanner;
+    private Scanner scanner;
+    private Tree tree;
+    private Stack stack;
+    private Queue queue;
 
     public Operation() {
         scanner = new Scanner(System.in);
+        tree = new Tree();
+        stack = new Stack();
+        queue = new Queue();
+        createDefaultData();
+        start();
     }
 
-    public void start() {
+    private void start() {
         while (true) {
-            System.out.println("\n== KAMUS KATA BY KELOMPOK 24 ==");
+            System.out.println("\n== KAMUS KATA BY KELOMPOK 9 ==");
             System.out.println("1. Cari kata");
             System.out.println("2. Tampilkan semua kata");
             System.out.println("3. Hapus kata");
@@ -26,12 +33,86 @@ class Operation {
             int choice = scanner.nextInt();
             scanner.nextLine();
 
-            if (choice == 5) {
-                System.out.println("Terima kasih telah menggunakan kamus!");
-                break;
-            } else {
-                System.out.println("Pilihan belum tersedia.");
+            switch (choice) {
+                case 1 -> findWord();
+                case 2 -> showAllWords();
+                case 3 -> deleteWord();
+                case 4 -> showDeletedHistory();
+                case 5 -> exit();
+                default -> System.out.println("Pilihan tidak valid!");
             }
         }
     }
-}  
+
+    private void findWord() {
+        System.out.print("Masukkan awalan kata yang ingin dicari: ");
+        String prefix = scanner.nextLine().toLowerCase();
+        if (tree.search(prefix)) {
+            System.out.println("Kata dengan awalan '" + prefix + "' ditemukan.");
+            tree.printWords();
+        } else {
+            System.out.println("Tidak ada kata dengan awalan '" + prefix + "'");
+        }
+    }
+
+    private void showAllWords() {
+        System.out.println("Pilih urutan pengurutan:");
+        System.out.println("1. Urutkan Ascending");
+        System.out.println("2. Urutkan Descending");
+        System.out.println("3. Tampilkan tanpa pengurutan");
+        System.out.print("Masukkan pilihan Anda: ");
+        int orderChoice = scanner.nextInt();
+        scanner.nextLine();
+
+        switch (orderChoice) {
+            case 1 -> {
+                tree.bubbleSortAscending();
+                System.out.println("Kata telah diurutkan secara ascending.");
+                tree.printWords();
+            }
+            case 2 -> {
+                tree.bubbleSortDescending();
+                System.out.println("Kata telah diurutkan secara descending.");
+                tree.printWords();
+            }
+            case 3 -> tree.printWords();
+            default -> System.out.println("Pilihan tidak valid!");
+        }
+    }
+
+    private void deleteWord() {
+        System.out.print("Masukkan kata yang ingin dihapus: ");
+        String word = scanner.nextLine().toLowerCase();
+        tree.delete(word);
+        queue.enqueue(word); // Simpan kata yang dihapus ke dalam queue
+        System.out.println("Kata '" + word + "' berhasil dihapus.");
+    }
+
+    private void showDeletedHistory() {
+        System.out.println("Riwayat kata yang dihapus:");
+        queue.print();
+    }
+
+    private void exit() {
+        System.out.println("Terima kasih telah menggunakan kamus!");
+        System.exit(0);
+    }
+
+    private void createDefaultData() {
+        insertDefault("Alvionita");
+        insertDefault("Surya");
+        insertDefault("Angie");
+        insertDefault("Novi");
+        insertDefault("Ayub");
+        insertDefault("Nurul");
+        insertDefault("abjad");
+        insertDefault("absorpsi");
+        insertDefault("actual");
+        insertDefault("adab");
+    }
+
+    private void insertDefault(String word) {
+        stack.push(word);
+        tree.insert(word);
+    }
+}
